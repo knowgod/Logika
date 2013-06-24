@@ -11,7 +11,7 @@ define("DEBUG_MODE", 0);
 class Logika
 {
 
-    const DigitsRange = 5;
+    const DigitsRange = 10;
 
     protected $_number;
     protected $_guessTry;
