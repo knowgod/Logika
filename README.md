@@ -9,9 +9,9 @@ Your goal is to guess the computer's secret number.
 
 Usage:
 
-	<p>Logika.php [N]</p>
+	Logika.php [N]
  
-	N is non-mandatory parameter wich defines the length of secret number. Initially (if omited) N=2.
+_N is non-mandatory parameter wich defines the length of secret number. Initially (if omited) N=2_.
 
 Digits are unique in the secret number.
 After each your guess computer will report the resul as "C-P". 
