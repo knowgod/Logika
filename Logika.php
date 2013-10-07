@@ -15,9 +15,9 @@ class Logika
     /**
      * Literal strings:
      */
-    const S_NoDoublesAllowed = '\n No doubles allowed!!!';
-    const S_YourGuess = '\n\nYour guess > ';
-    const S_YouWin = '\n\n======= YOU WIN !!! ========\n';
+    const S_NoDoublesAllowed = "\n No doubles allowed!!!";
+    const S_YourGuess = "\n\nYour guess > ";
+    const S_YouWin = "\n\n======= YOU WIN !!! ========\n";
 
     protected $_number;
     protected $_guessTry;
