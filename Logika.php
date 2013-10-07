@@ -15,9 +15,9 @@ class Logika
     /**
      * Literal strings:
      */
-    const S_NoDoublesAllowed = 'No doubles allowed!!!';
-    const S_YourGuess = 'Your guess > ';
-    const S_YouWin = '======= YOU WIN !!! ========';
+    const S_NoDoublesAllowed = '\n No doubles allowed!!!';
+    const S_YourGuess = '\n\nYour guess > ';
+    const S_YouWin = '\n\n======= YOU WIN !!! ========\n';
 
     protected $_number;
     protected $_guessTry;
@@ -36,7 +36,7 @@ class Logika
         while (TRUE !== $this->compare()) {
             $this->input();
         }
-        echo "\n\n" . self::S_YouWin . "\n";
+        echo self::S_YouWin;
     }
 
     public function init($digits)
@@ -75,7 +75,7 @@ class Logika
 
     public function input($inputString = NULL)
     {
-        echo "\n\n" . self::S_YourGuess;
+        echo self::S_YourGuess;
         $this->_log($inputString);
         if (is_null($inputString)) {
             $inputString = trim(fgets(STDIN));
@@ -90,7 +90,7 @@ class Logika
         $guess = array_flip(str_split($this->_guessTry));
         Debug::log(array($original, $guess));
         if (count($guess) != count($original)) {
-            echo "\n " . self::S_NoDoublesAllowed;
+            echo self::S_NoDoublesAllowed;
         } else {
             $correctNumber = 0;
             $correctPlace = 0;
