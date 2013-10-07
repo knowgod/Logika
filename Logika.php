@@ -23,8 +23,11 @@ class Logika
     protected $_guessTry;
     protected $_guessResult;
     protected $_guessLog = array();
-    protected $_analizeMatrix = array();
-    protected $_anaMatrixDimensions = array();
+
+    /**
+     * @var AnalizysMatrix
+     */
+    protected $_analizysMatrix;
 
     public function run($digits = 2)
     {
@@ -60,47 +63,7 @@ class Logika
         }
         $this->_number = implode('', $numbers);
 //        $this->_log($this->_number);
-        $this->_initAnalizeMatrix(strlen($this->_number), self::DigitsRange);
-    }
-
-    protected function _updateAnaMatrixByZero($guess)
-    {
-//        $this->_log(array($guess, $this->_analizeMatrix));
-        for ($i = 1; $i <= strlen($guess); ++$i) {
-            unset($this->_analizeMatrix[$i][$guess[$i - 1]]);
-        }
-//        $this->_log(array($guess, $this->_analizeMatrix)); //!!!!
-    }
-
-    protected function _updateAnaMatrixByDigits($digits, $bInclude = TRUE)
-    {
-        $this->_log(array('digits' => $digits));
-        for ($i = 0; $i < $this->_anaMatrixDimensions['y']; ++$i) {
-            $this->_log(array('digits' => $digits, 'i' => $i, strpos((string) $digits, (string) $i), 'Matrix' => $this->_analizeMatrix));
-            if (!($bInclude && FALSE === strpos((string) $digits, (string) $i))) {
-                continue;
-            }
-            foreach ($this->_analizeMatrix as $pos => &$aAvailable) {
-                unset($aAvailable[$i]);
-            }
-        }
-        $this->_log(array('digits' => $digits, 'Matrix' => $this->_analizeMatrix)); //!!!!
-    }
-
-    protected function _initAnalizeMatrix($x, $y = 10)
-    {
-        $this->_anaMatrixDimensions = array('x' => $x, 'y' => $y);
-        $sample = array_keys(array_fill(0, $y, ''));
-        $this->_analizeMatrix = array_fill(1, $x, $sample);
-    }
-
-    protected function _getAnalizeOutput()
-    {
-        $output = $ruler = "\n" . str_repeat('=', $this->_anaMatrixDimensions['y'] + ($this->_anaMatrixDimensions['y'] - 1) * 3 + 5);
-        foreach ($this->_analizeMatrix as $position => $aAllowedNums) {
-            $output .= "\n$position => " . implode(' | ', $aAllowedNums);
-        }
-        return $output . $ruler . "\n";
+        $this->_analizysMatrix = new AnalizysMatrix(strlen($this->_number), self::DigitsRange);
     }
 
     public function input($inputString = NULL)
@@ -132,19 +95,19 @@ class Logika
                 }
             }
             if (0 == $correctPlace) {
-                $this->_updateAnaMatrixByZero($this->_guessTry);
+                $this->_analizysMatrix->updateByZero($this->_guessTry);
             }
             if (strlen($this->_number) == $correctNumber) {
-                $this->_updateAnaMatrixByDigits($this->_guessTry);
+                $this->_analizysMatrix->updateByDigits($this->_guessTry);
             }
             if (0 == $correctNumber) {
-                $this->_updateAnaMatrixByDigits($this->_guessTry, FALSE);
+                $this->_analizysMatrix->updateByDigits($this->_guessTry, FALSE);
             }
             $this->_guessResult = "{$correctNumber}-{$correctPlace}";
             $try = (count($this->_guessLog) + 1) . ". {$this->_guessTry} :: {$this->_guessResult}";
             $this->_guessLog[] = $try;
 
-            echo $this->_getAnalizeOutput();
+            echo $this->_analizysMatrix->getTableOutput();
             foreach ($this->_guessLog as $record) {
                 echo "\n" . $record;
             }
@@ -155,6 +118,54 @@ class Logika
     protected function _log($str)
     {
         Debug::log($str, 1);
+    }
+
+}
+
+class AnalizysMatrix
+{
+
+    protected $_analizeMatrix = array();
+    protected $_anaMatrixDimensions = array();
+
+    public function __construct($x, $y = 10)
+    {
+        $this->_anaMatrixDimensions = array('x' => $x, 'y' => $y);
+        $sample = array_keys(array_fill(0, $y, ''));
+        $this->_analizeMatrix = array_fill(1, $x, $sample);
+    }
+
+    public function updateByZero($guess)
+    {
+//        Debug::log(array($guess, $this->_analizeMatrix));
+        for ($i = 1; $i <= strlen($guess); ++$i) {
+            unset($this->_analizeMatrix[$i][$guess[$i - 1]]);
+        }
+//        Debug::log(array($guess, $this->_analizeMatrix));
+    }
+
+    public function updateByDigits($digits, $bInclude = TRUE)
+    {
+        Debug::log(array('digits' => $digits));
+        for ($i = 0; $i < $this->_anaMatrixDimensions['y']; ++$i) {
+            Debug::log(array('digits' => $digits, 'i' => $i, strpos((string) $digits, (string) $i), 'Matrix' => $this->_analizeMatrix));
+            if (!($bInclude && FALSE === strpos((string) $digits, (string) $i))) {
+                continue;
+            }
+            foreach ($this->_analizeMatrix as $pos => &$aAvailable) {
+                unset($aAvailable[$i]);
+            }
+        }
+        Debug::log(array('digits' => $digits, 'Matrix' => $this->_analizeMatrix));
+    }
+
+    public function getTableOutput()
+    {
+        $output = $ruler = "\n" . str_repeat('=', $this->_anaMatrixDimensions['y'] + ($this->_anaMatrixDimensions['y'] - 1) * 3 + 5);
+        foreach ($this->_analizeMatrix as $position => $aAllowedNums) {
+            $output .= "\n$position => " . implode(' | ', $aAllowedNums);
+        }
+        return $output . $ruler . "\n";
     }
 
 }
