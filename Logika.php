@@ -1,10 +1,10 @@
 #!/usr/bin/php
 
 <?php
-define("DEBUG_MODE", 0);
+define("LOGIKA_DEBUG_MODE", 0);
 
 /**
- * Description of Logika
+ * Logika game itself
  *
  * @author arkadij
  */
@@ -12,6 +12,12 @@ class Logika
 {
 
     const DigitsRange = 10;
+    /**
+     * Literal strings:
+     */
+    const S_NoDoublesAllowed = 'No doubles allowed!!!';
+    const S_YourGuess = 'Your guess > ';
+    const S_YouWin = '======= YOU WIN !!! ========';
 
     protected $_number;
     protected $_guessTry;
@@ -27,7 +33,7 @@ class Logika
         while (TRUE !== $this->compare()) {
             $this->input();
         }
-        echo "\n\n======= YOU WIN !!! ========\n";
+        echo "\n\n" . self::S_YouWin . "\n";
     }
 
     public function init($digits)
@@ -97,14 +103,14 @@ class Logika
         return $output . $ruler . "\n";
     }
 
-    public function input($stdin = NULL)
+    public function input($inputString = NULL)
     {
-        echo "\n\nYour guess > ";
-        $this->_log($stdin); //!!!!
-        if (is_null($stdin)) {
-            $stdin = trim(fgets(STDIN));
+        echo "\n\n" . self::S_YourGuess;
+        $this->_log($inputString);
+        if (is_null($inputString)) {
+            $inputString = trim(fgets(STDIN));
         }
-        $this->_guessTry = substr($stdin, 0, strlen($this->_number));
+        $this->_guessTry = substr($inputString, 0, strlen($this->_number));
         return $this->_guessTry;
     }
 
@@ -113,7 +119,7 @@ class Logika
         $original = array_flip(str_split($this->_number));
         $guess = array_flip(str_split($this->_guessTry));
         if (count($guess) != count($original)) {
-            echo "\n No doubles allowed!!!";
+            echo "\n " . self::S_NoDoublesAllowed;
         } else {
             $correctNumber = 0;
             $correctPlace = 0;
