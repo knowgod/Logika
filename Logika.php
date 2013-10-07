@@ -142,11 +142,6 @@ class Logika
         return $original == $guess;
     }
 
-    protected function _echo($str)
-    {
-        fwrite(STDOUT, $str);
-    }
-
     protected function _log($str)
     {
         if (defined('DEBUG_MODE') && DEBUG_MODE) {
@@ -166,6 +161,10 @@ class Logika
 ?>
 
 <?php
+if (defined('LOGIKA_PHPUNIT_TESTING') && LOGIKA_PHPUNIT_TESTING) {
+    die("/n---------- Expecting all tests performed here. End. -----------");
+}
+
 var_export($argv);
 $l = new Logika();
 $l->run(($argc > 1) ? $argv[1] : 2);
