@@ -103,13 +103,13 @@ class Logika
                 }
             }
             if (0 == $correctPlace) {
-                $this->_analysisMatrix->updateByZero($this->_guessTry);
+                $this->_analysisMatrix->guessLike_0_0($this->_guessTry);
             }
             if (strlen($this->_number) == $correctNumber) {
-                $this->_analysisMatrix->updateByDigits($this->_guessTry);
+                $this->_analysisMatrix->guessLike_4_x($this->_guessTry);
             }
             if (0 == $correctNumber) {
-                $this->_analysisMatrix->updateByDigits($this->_guessTry, FALSE);
+                $this->_analysisMatrix->guessLike_4_0($this->_guessTry);
             }
             $this->_guessResult = "{$correctNumber}-{$correctPlace}";
             $try = (count($this->_guessLog) + 1) . ". {$this->_guessTry} :: {$this->_guessResult}";
@@ -148,7 +148,11 @@ class AnalysisMatrix
         $this->_analizeMatrix = array_fill(1, $x, $sample);
     }
 
-    public function updateByZero($guess)
+    /**
+     * Exclude numbers from its' places in matrix
+     * @param string $guess
+     */
+    public function guessLike_0_0($guess)
     {
 //        Debug::log(array($guess, $this->_analizeMatrix));
         for ($i = 1; $i <= strlen($guess); ++$i) {
@@ -157,7 +161,31 @@ class AnalysisMatrix
         Debug::log(array('guess' => $guess, 'Matrix' => $this->_analizeMatrix));
     }
 
-    public function updateByDigits($digits, $bInclude = TRUE)
+    /**
+     * None of these numbers are present
+     * @param string $digits
+     */
+    public function guessLike_4_0($digits)
+    {
+        $this->_updateByDigits($digits, FALSE);
+    }
+
+    /**
+     * All numbers guessed properly
+     * @param string $digits
+     */
+    public function guessLike_4_x($digits)
+    {
+        $this->_updateByDigits($digits);
+    }
+
+    /**
+     * Set these digits as present in matrix or not - depends on $bInclude
+     *
+     * @param string $digits
+     * @param bool $bInclude
+     */
+    protected function _updateByDigits($digits, $bInclude = TRUE)
     {
 //        Debug::log(array('digits' => $digits));
         for ($i = 0; $i < $this->_anaMatrixDimensions['y']; ++$i) {
@@ -184,7 +212,11 @@ class AnalysisMatrix
     public function test_getMatrix()
     {
         if (defined('LOGIKA_PHPUNIT_TESTING')) {
-            return $this->_analizeMatrix;
+            $ret = array();
+            foreach ($this->_analizeMatrix as $i => $row) {
+                $ret[$i] = implode('', $row);
+            }
+            return $ret;
         }
         return FALSE;
     }

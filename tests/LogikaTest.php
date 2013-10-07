@@ -1,6 +1,7 @@
 <?php
 
-define('LOGIKA_PHPUNIT_TESTING', 1);
+if (!defined('LOGIKA_PHPUNIT_TESTING'))
+    define('LOGIKA_PHPUNIT_TESTING', 1);
 
 require_once '../Logika.php';
 
