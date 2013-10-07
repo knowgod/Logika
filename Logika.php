@@ -25,9 +25,9 @@ class Logika
     protected $_guessLog = array();
 
     /**
-     * @var AnalizysMatrix
+     * @var AnalysisMatrix
      */
-    protected $_analizysMatrix;
+    protected $_analysisMatrix;
 
     public function run($digits = 2)
     {
@@ -63,7 +63,7 @@ class Logika
         }
         $this->_number = implode('', $numbers);
 //        $this->_log($this->_number);
-        $this->_analizysMatrix = new AnalizysMatrix(strlen($this->_number), self::DigitsRange);
+        $this->_analysisMatrix = new AnalysisMatrix(strlen($this->_number), self::DigitsRange);
     }
 
     public function input($inputString = NULL)
@@ -95,19 +95,19 @@ class Logika
                 }
             }
             if (0 == $correctPlace) {
-                $this->_analizysMatrix->updateByZero($this->_guessTry);
+                $this->_analysisMatrix->updateByZero($this->_guessTry);
             }
             if (strlen($this->_number) == $correctNumber) {
-                $this->_analizysMatrix->updateByDigits($this->_guessTry);
+                $this->_analysisMatrix->updateByDigits($this->_guessTry);
             }
             if (0 == $correctNumber) {
-                $this->_analizysMatrix->updateByDigits($this->_guessTry, FALSE);
+                $this->_analysisMatrix->updateByDigits($this->_guessTry, FALSE);
             }
             $this->_guessResult = "{$correctNumber}-{$correctPlace}";
             $try = (count($this->_guessLog) + 1) . ". {$this->_guessTry} :: {$this->_guessResult}";
             $this->_guessLog[] = $try;
 
-            echo $this->_analizysMatrix->getTableOutput();
+            echo $this->_analysisMatrix->getTableOutput();
             foreach ($this->_guessLog as $record) {
                 echo "\n" . $record;
             }
@@ -122,7 +122,7 @@ class Logika
 
 }
 
-class AnalizysMatrix
+class AnalysisMatrix
 {
 
     protected $_analizeMatrix = array();
