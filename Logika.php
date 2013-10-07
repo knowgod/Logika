@@ -181,6 +181,14 @@ class AnalysisMatrix
         return $output . $ruler . "\n";
     }
 
+    public function test_getMatrix()
+    {
+        if (defined('LOGIKA_PHPUNIT_TESTING')) {
+            return $this->_analizeMatrix;
+        }
+        return FALSE;
+    }
+
 }
 
 /**
