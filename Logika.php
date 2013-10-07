@@ -102,7 +102,7 @@ class Logika
         echo "\n\nYour guess > ";
         $this->_log($stdin); //!!!!
         if (is_null($stdin)) {
-        $stdin = trim(fgets(STDIN));
+            $stdin = trim(fgets(STDIN));
         }
         $this->_guessTry = substr($stdin, 0, strlen($this->_number));
         return $this->_guessTry;
@@ -166,9 +166,9 @@ class Logika
 
 <?php
 if (defined('LOGIKA_PHPUNIT_TESTING') && LOGIKA_PHPUNIT_TESTING) {
-    die("/n---------- Expecting all tests performed here. End. -----------");
+    echo "\n---------- Starting tests here. Required class plugged in. -----------\n\n";
+} else {
+    var_export($argv);
+    $l = new Logika();
+    $l->run(($argc > 1) ? $argv[1] : 2);
 }
-
-var_export($argv);
-$l = new Logika();
-$l->run(($argc > 1) ? $argv[1] : 2);
