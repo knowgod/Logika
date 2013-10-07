@@ -97,11 +97,15 @@ class Logika
         return $output . $ruler . "\n";
     }
 
-    public function input()
+    public function input($stdin = NULL)
     {
         echo "\n\nYour guess > ";
+        $this->_log($stdin); //!!!!
+        if (is_null($stdin)) {
         $stdin = trim(fgets(STDIN));
+        }
         $this->_guessTry = substr($stdin, 0, strlen($this->_number));
+        return $this->_guessTry;
     }
 
     public function compare()
