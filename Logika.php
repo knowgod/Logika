@@ -74,9 +74,9 @@ class Logika
 
     protected function _updateAnaMatrixByDigits($digits, $bInclude = TRUE)
     {
-        $this->_log(array($digits));
+        $this->_log(array('digits' => $digits));
         for ($i = 0; $i < $this->_anaMatrixDimensions['y']; ++$i) {
-            $this->_log(array($digits, $i, strpos((string) $digits, (string) $i), $this->_analizeMatrix));
+            $this->_log(array('digits' => $digits, 'i' => $i, strpos((string) $digits, (string) $i), 'Matrix' => $this->_analizeMatrix));
             if (!($bInclude && FALSE === strpos((string) $digits, (string) $i))) {
                 continue;
             }
@@ -84,7 +84,7 @@ class Logika
                 unset($aAvailable[$i]);
             }
         }
-        $this->_log(array($digits, $this->_analizeMatrix)); //!!!!
+        $this->_log(array('digits' => $digits, 'Matrix' => $this->_analizeMatrix)); //!!!!
     }
 
     protected function _initAnalizeMatrix($x, $y = 10)
@@ -154,16 +154,39 @@ class Logika
 
     protected function _log($str)
     {
-        if (defined('DEBUG_MODE') && DEBUG_MODE) {
+        Debug::log($str, 1);
+    }
+
+}
+
+/**
+ * Debugging functions gathered here
+ */
+class Debug
+{
+
+    protected static function _isEnabled()
+    {
+        return (defined('LOGIKA_PHPUNIT_TESTING') && LOGIKA_PHPUNIT_TESTING) || (defined('LOGIKA_DEBUG_MODE') && LOGIKA_DEBUG_MODE);
+    }
+
+    /**
+     *
+     * @param mixed $str
+     * @param int $shift
+     */
+    public static function log($str, $shift = 0)
+    {
+        if (self::_isEnabled()) {
             $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            if (!isset($stack[1]['class'])) {
-                $stack[1]['class'] = isset($stack[0]['file']) ? $stack[0]['file'] : 'noClass';
+            if (!isset($stack[1 + $shift]['class'])) {
+                $stack[1 + $shift]['class'] = isset($stack[0 + $shift]['file']) ? $stack[0 + $shift]['file'] : 'noClass';
             }
             if (!isset($stack[1]['function'])) {
-                $stack[1]['function'] = 'noFunc';
+                $stack[1 + $shift]['function'] = 'noFunc';
             }
-            $before = "\nDEBUG: {$stack[0]['line']}. {$stack[1]['class']}::{$stack[1]['function']} :\n";
-            fwrite(STDERR, $before . print_r($str));
+            $before = "\nDEBUG: {$stack[0 + $shift]['line']}. {$stack[1 + $shift]['class']}::{$stack[1 + $shift]['function']} :\n";
+            fwrite(STDOUT, $before . print_r($str, 1));
         }
     }
 
