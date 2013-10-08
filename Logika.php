@@ -154,9 +154,11 @@ class AnalysisMatrix
      */
     public function guessLike_0_0($guess)
     {
-//        Debug::log(array($guess, $this->_analizeMatrix));
+        Debug::log(array('guess' => $guess, 'Matrix' => $this->_analizeMatrix));
         for ($i = 1; $i <= strlen($guess); ++$i) {
-            unset($this->_analizeMatrix[$i][$guess[$i - 1]]);
+            for ($j = 1; $j <= count($this->_analizeMatrix); ++$j) {
+                unset($this->_analizeMatrix[$j][$guess[$i - 1]]);
+            }
         }
         Debug::log(array('guess' => $guess, 'Matrix' => $this->_analizeMatrix));
     }
@@ -164,29 +166,12 @@ class AnalysisMatrix
     /**
      * None of these numbers are present
      * @param string $digits
+     *
+     * @todo Fix this method
      */
     public function guessLike_4_0($digits)
     {
-        $this->_updateByDigits($digits, FALSE);
-    }
-
-    /**
-     * All numbers guessed properly
-     * @param string $digits
-     */
-    public function guessLike_4_x($digits)
-    {
-        $this->_updateByDigits($digits);
-    }
-
-    /**
-     * Set these digits as present in matrix or not - depends on $bInclude
-     *
-     * @param string $digits
-     * @param bool $bInclude
-     */
-    protected function _updateByDigits($digits, $bInclude = TRUE)
-    {
+        $bInclude = FALSE;
 //        Debug::log(array('digits' => $digits));
         for ($i = 0; $i < $this->_anaMatrixDimensions['y']; ++$i) {
 //            Debug::log(array('digits' => $digits, 'i' => $i, strpos((string) $digits, (string) $i), 'Matrix' => $this->_analizeMatrix));
@@ -197,7 +182,27 @@ class AnalysisMatrix
                 unset($aAvailable[$i]);
             }
         }
-        Debug::log(array('digits' => $digits, 'Matrix' => $this->_analizeMatrix));
+//        Debug::log(array('digits' => $digits, 'Matrix' => $this->_analizeMatrix));
+    }
+
+    /**
+     * All numbers guessed properly
+     * @param string $digits
+     */
+    public function guessLike_4_x($digits)
+    {
+        $bInclude = TRUE;
+//        Debug::log(array('digits' => $digits));
+        for ($i = 0; $i < $this->_anaMatrixDimensions['y']; ++$i) {
+//            Debug::log(array('digits' => $digits, 'i' => $i, strpos((string) $digits, (string) $i), 'Matrix' => $this->_analizeMatrix));
+            if (!($bInclude && FALSE === strpos((string) $digits, (string) $i))) {
+                continue;
+            }
+            foreach ($this->_analizeMatrix as $pos => &$aAvailable) {
+                unset($aAvailable[$i]);
+            }
+        }
+//        Debug::log(array('digits' => $digits, 'Matrix' => $this->_analizeMatrix));
     }
 
     public function getTableOutput()

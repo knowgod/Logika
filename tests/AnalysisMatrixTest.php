@@ -19,16 +19,24 @@ class AnalysisMatrixTest extends PHPUnit_Framework_TestCase
         return $instance;
     }
 
-    public function testUpdateByDigits()
+    public function testGuessLike_x_x()
     {
-        $instance = $this->_getInstance(4, 10);
-
-        $instance->guessedDigitsCorrect('6540');
-        $matrix = $instance->test_getMatrix();
-        Debug::log($matrix);
-        $this->assertCount(4, $matrix);
-        foreach ($matrix as $row) {
-            $this->assertEquals('0456', $row);
+        $guess = '6540';
+        $assertRows = array(
+            'guessLike_0_0' => array('123789', '123789', '123789', '123789'),
+            'guessLike_4_x' => array('0456', '0456', '0456', '0456'),
+            'guessLike_4_0' => array('045', '046', '056', '456'),
+        );
+        foreach ($assertRows as $method => $assertRow) {
+            $instance = $this->_getInstance(4, 10);
+            $instance->$method($guess);
+            $matrix = $instance->test_getMatrix();
+            Debug::log(array('--------------------------' => $method, '$matrix' => $matrix, '$assertRow' => $assertRow));
+            $this->assertCount(4, $matrix);
+            foreach ($matrix as $i => $row) {
+                Debug::log(array(' $i' => $i, '$row' => $row, '$assertRow  ' => $assertRow));
+                $this->assertEquals($assertRow[$i - 1], $row);
+            }
         }
     }
 
