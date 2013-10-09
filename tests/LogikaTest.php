@@ -20,13 +20,22 @@ class LogikaTest extends PHPUnit_Framework_TestCase
         return $instance;
     }
 
-    public function testInput()
+    public function dataInput() {
+        return array(
+            array('10', '10'),
+            array('08', '08'),
+            array('10', '103'),
+            array('55', '55'),
+        );
+    }
+
+    /**
+     * @dataProvider dataInput
+     */
+    public function testInput($expect, $param)
     {
         $instance = $this->_getInstance(2);
-        $this->assertEquals('10', $instance->input('10'));
-        $this->assertEquals('08', $instance->input('08'));
-        $this->assertEquals('10', $instance->input('103'));
-        $this->assertEquals('55', $instance->input('55'));
+        $this->assertEquals($expect, $instance->input($param));
     }
 
     public function testCompare()
