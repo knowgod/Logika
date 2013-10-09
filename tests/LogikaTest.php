@@ -20,7 +20,8 @@ class LogikaTest extends PHPUnit_Framework_TestCase
         return $instance;
     }
 
-    public function dataInput() {
+    public function dataInput()
+    {
         return array(
             array('10', '10'),
             array('08', '08'),
@@ -32,9 +33,9 @@ class LogikaTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataInput
      */
-    public function testInput($expect, $param)
+    public function testInput($expect, $param, $inputLength = 2)
     {
-        $instance = $this->_getInstance(2);
+        $instance = $this->_getInstance($inputLength);
         $this->assertEquals($expect, $instance->input($param));
     }
 
