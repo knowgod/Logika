@@ -23,8 +23,8 @@ class AnalysisMatrixTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array('guessLike_0_0', '6540', array('123789', '123789', '123789', '123789')),
-            array('guessLike_4_x', '6540', array('0456', '0456', '0456', '0456')),
-            array('guessLike_4_0', '6540', array('045', '046', '056', '456')),
+            array('guessLike_4_X', '6540', array('0456', '0456', '0456', '0456')),
+            array('guessLike_X_0', '6540', array('012345789', '012346789', '012356789', '123456789')),
         );
     }
 
