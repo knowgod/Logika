@@ -71,6 +71,16 @@ class LogikaTest extends PHPUnit_Framework_TestCase
         $this->$method($instance->compare());
     }
 
+    public function testEchos()
+    {
+        $instance = $this->_getInstance(3);
+        $instance->input('333');
+        ob_start();
+        $this->assertFalse($instance->compare());
+        $ob = ob_get_flush();
+        $this->assertEquals($ob, Logika::S_NoDoublesAllowed);
+    }
+
 }
 
 ?>
