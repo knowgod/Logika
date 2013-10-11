@@ -62,8 +62,8 @@ class Logika
             }
         }
         $this->_number = implode('', $numbers);
-//        $this->_log($this->_number);
         $this->_analysisMatrix = new AnalysisMatrix(strlen($this->_number), self::DigitsRange);
+        return $this->_number;
     }
 
     public function test_getNumber()

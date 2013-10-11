@@ -71,14 +71,41 @@ class LogikaTest extends PHPUnit_Framework_TestCase
         $this->$method($instance->compare());
     }
 
-    public function testEchos()
+    public function testOutput_01()
     {
         $instance = $this->_getInstance(3);
         $instance->input('333');
         ob_start();
-        $this->assertFalse($instance->compare());
+        $instance->compare();
         $ob = ob_get_flush();
-        $this->assertEquals($ob, Logika::S_NoDoublesAllowed);
+        $this->assertEquals(Logika::S_NoDoublesAllowed, $ob);
+    }
+
+    public function testOutput_02()
+    {
+        $instance = $this->_getInstance(3);
+        $secretNumber = $instance->test_getNumber();
+        $anaMatrix = new AnalysisMatrix(3, 10);
+        $anaMatrix->guessLike_4_X($secretNumber);
+        $str = <<<STR
+{$anaMatrix->getTableOutput()}
+1. {$secretNumber} :: 3-3
+STR;
+        $instance->input($secretNumber);
+        ob_start();
+        $instance->compare();
+        $ob = ob_get_flush();
+        $this->assertEquals($str, $ob);
+    }
+
+    public function testOutput_03()
+    {
+        $instance = $this->_getInstance(3);
+        $secretNumber = $instance->test_getNumber();
+        ob_start();
+        $instance->input($secretNumber);
+        $ob = ob_get_flush();
+        $this->assertEquals(Logika::S_YourGuess, $ob);
     }
 
 }
