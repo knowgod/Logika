@@ -88,7 +88,7 @@ class Logika
     {
         $original = array_flip(str_split($this->_number));
         $guess = array_flip(str_split($this->_guessTry));
-        Debug::log(array($original, $guess));
+//        Debug::log(array('$original' => $original, '$guess' => $guess));
         if (count($guess) != count($original)) {
             echo self::S_NoDoublesAllowed;
         } else {
@@ -151,7 +151,7 @@ class AnalysisMatrix
 
     /**
      * None of these numbers are present
-     * 
+     *
      * @param string $guess
      */
     public function guessLike_0_0($guess)
@@ -233,12 +233,6 @@ class Debug
     {
         if (self::_isEnabled()) {
             $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            if (!isset($stack[1 + $shift]['class'])) {
-                $stack[1 + $shift]['class'] = isset($stack[0 + $shift]['file']) ? $stack[0 + $shift]['file'] : 'noClass';
-            }
-            if (!isset($stack[1]['function'])) {
-                $stack[1 + $shift]['function'] = 'noFunc';
-            }
             $before = "\nDEBUG: {$stack[0 + $shift]['line']}. {$stack[1 + $shift]['class']}::{$stack[1 + $shift]['function']} :\n";
             fwrite(STDOUT, $before . print_r($str, 1));
         }
