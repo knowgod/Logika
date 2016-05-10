@@ -13,5 +13,10 @@
             "email": "arkuzhel@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Arkuznet\\Logika\\": "src/"
+        }
+    },
     "minimum-stability": "alpha"
 }

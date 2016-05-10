@@ -1,6 +1,7 @@
-#!/usr/bin/php
-
 <?php
+
+namespace Arkuznet\Logika;
+
 define("LOGIKA_DEBUG_MODE", 0);
 
 /**
