@@ -9,7 +9,7 @@ Your goal is to guess the computer's secret number.
 
 Usage:
 
-	Logika.php [N]
+	./bin/logika [N]
  
 _N is non-mandatory parameter wich defines the length of secret number. Initially (if omited) N=2_.
 
