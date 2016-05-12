@@ -67,11 +67,19 @@ class Logika
         return $this->_number;
     }
 
+    /**
+     * Used by unit tests
+     *
+     * @todo Get rid of this method and its usage
+     *
+     * @return null
+     */
     public function test_getNumber()
     {
         if (defined('LOGIKA_PHPUNIT_TESTING')) {
             return $this->_number;
         }
+        return null;
     }
 
     public function input($inputString = NULL)
