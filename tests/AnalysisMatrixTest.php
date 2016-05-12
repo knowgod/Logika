@@ -32,8 +32,7 @@ class AnalysisMatrixTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataGuessLike_x_x
      *
-     * @param string $method wich method to test
-     * @param int $y length of secret number
+     * @param string $method which method to test
      * @param string $guess guess number
      * @param array $assertRow expected matrix state
      * @param int $x secret number base
@@ -52,5 +51,3 @@ class AnalysisMatrixTest extends PHPUnit_Framework_TestCase
     }
 
 }
-
-?>
