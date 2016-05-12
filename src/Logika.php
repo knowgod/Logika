@@ -67,11 +67,19 @@ class Logika
         return $this->_number;
     }
 
+    /**
+     * Used by unit tests
+     *
+     * @todo Get rid of this method and its usage
+     *
+     * @return null
+     */
     public function test_getNumber()
     {
         if (defined('LOGIKA_PHPUNIT_TESTING')) {
             return $this->_number;
         }
+        return null;
     }
 
     public function input($inputString = NULL)
@@ -137,107 +145,5 @@ class Logika
 
 }
 
-class AnalysisMatrix
-{
 
-    protected $_analizeMatrix = array();
-    protected $_matrixDimensions = array();
-
-    public function __construct($x, $y = 10)
-    {
-        $this->_matrixDimensions = array('x' => $x, 'y' => $y);
-        $sample = array_keys(array_fill(0, $y, ''));
-        $this->_analizeMatrix = array_fill(1, $x, $sample);
-    }
-
-    /**
-     * None of these numbers are present
-     *
-     * @param string $guess
-     */
-    public function guessLike_0_0($guess)
-    {
-        foreach ($this->_analizeMatrix as $pos => &$row) {
-            for ($i = 0; $i < strlen($guess); ++$i) {
-                unset($row[$guess[$i]]);
-            }
-        }
-    }
-
-    /**
-     * Exclude numbers from its' places in matrix
-     *
-     * @param string $digits
-     */
-    public function guessLike_X_0($guess)
-    {
-//        Debug::log(array('digits' => $digits));
-        for ($i = 0; $i < strlen($guess); ++$i) {
-            unset($this->_analizeMatrix[$i + 1][$guess[$i]]);
-        }
-    }
-
-    /**
-     * All numbers guessed properly
-     *
-     * @param string $digits
-     */
-    public function guessLike_4_X($digits)
-    {
-        foreach ($this->_analizeMatrix as $pos => $row) {
-            $newRow = str_split($digits);
-            asort($newRow);
-            $this->_analizeMatrix[$pos] = array_combine($newRow, $newRow);
-        }
-    }
-
-    public function getTableOutput()
-    {
-        $output = $ruler = "\n" . str_repeat('=', $this->_matrixDimensions['y'] + ($this->_matrixDimensions['y'] - 1) * 3 + 5);
-        foreach ($this->_analizeMatrix as $position => $aAllowedNums) {
-            $output .= "\n$position => " . implode(' | ', $aAllowedNums);
-        }
-        return $output . $ruler . "\n";
-    }
-
-    public function test_getMatrix()
-    {
-        if (defined('LOGIKA_PHPUNIT_TESTING')) {
-            $ret = array();
-            foreach ($this->_analizeMatrix as $i => $row) {
-                $ret[$i] = implode('', $row);
-            }
-            return $ret;
-        }
-        return FALSE;
-    }
-
-}
-
-/**
- * Debugging functions gathered here
- */
-class Debug
-{
-
-    protected static function _isEnabled()
-    {
-        return (defined('LOGIKA_PHPUNIT_TESTING') && LOGIKA_PHPUNIT_TESTING) || (defined('LOGIKA_DEBUG_MODE') && LOGIKA_DEBUG_MODE);
-    }
-
-    /**
-     *
-     * @param mixed $str
-     * @param int $shift
-     */
-    public static function log($str, $shift = 0)
-    {
-        if (self::_isEnabled()) {
-            $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            $before = "\nDEBUG: {$stack[0 + $shift]['line']}. {$stack[1 + $shift]['class']}::{$stack[1 + $shift]['function']} :\n";
-            fwrite(STDOUT, $before . print_r($str, 1));
-        }
-    }
-
-}
 ?>
