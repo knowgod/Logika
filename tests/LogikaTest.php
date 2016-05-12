@@ -3,8 +3,9 @@
 if (!defined('LOGIKA_PHPUNIT_TESTING'))
     define('LOGIKA_PHPUNIT_TESTING', 1);
 
-use Arkuznet\Logika\Logika;
 use Arkuznet\Logika\AnalysisMatrix;
+use Arkuznet\Logika\Logika;
+
 /**
  * Description of LogikaTest
  *
