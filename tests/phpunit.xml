@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="phpunit.xsd"
+         bootstrap="../vendor/autoload.php"
+         colors="true"
+         backupGlobals="false"
+         verbose="true">
+
+    <testsuites>
+        <testsuite name="src">
+            <directory suffix="Test.php">./</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
+    <php>
+        <const name="LOGIKA_PHPUNIT_TESTING" value="1"/>
+    </php>
+</phpunit>
+
