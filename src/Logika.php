@@ -241,12 +241,3 @@ class Debug
 
 }
 ?>
-
-<?php
-if (defined('LOGIKA_PHPUNIT_TESTING') && LOGIKA_PHPUNIT_TESTING) {
-    echo "\n---------- Starting tests here. Required class plugged in. -----------\n\n";
-} else {
-    var_export($argv);
-    $l = new Logika();
-    $l->run(($argc > 1) ? $argv[1] : 2);
-}
