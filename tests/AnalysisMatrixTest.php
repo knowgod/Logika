@@ -3,7 +3,8 @@
 if (!defined('LOGIKA_PHPUNIT_TESTING'))
     define('LOGIKA_PHPUNIT_TESTING', 1);
 
-require_once '../Logika.php';
+use Arkuznet\Logika\AnalysisMatrix;
+use Arkuznet\Logika\Debug;
 
 /**
  * Description of LogikaTest

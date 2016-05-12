@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+$autoloadLocations = array(
+    getcwd() . '/vendor/autoload.php',
+    getcwd() . '/../../autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+);
+
+foreach ($autoloadLocations as $autoload) {
+    if (is_file($autoload)) {
+        require_once($autoload);
+        break;
+    }
+}
+
+
+use Arkuznet\Logika\Logika;
+
+if (defined('LOGIKA_PHPUNIT_TESTING') && LOGIKA_PHPUNIT_TESTING) {
+    echo "\n---------- Starting tests here. Required class plugged in. -----------\n\n";
+} else {
+    var_export($argv);
+    $app = new Logika();
+    $app->run(($argc > 1) ? $argv[1] : 2);
+}

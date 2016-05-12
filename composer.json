@@ -1,0 +1,22 @@
+{
+    "name": "arkadij/logika",
+    "description": "This is console text mode game. Your goal is to guess the computer's secret number.",
+    "license": "MIT",
+    "require": {
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
+    },
+    "authors": [
+        {
+            "name": "Arkadij Kuzhel",
+            "email": "arkuzhel@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Arkuznet\\Logika\\": "src/"
+        }
+    },
+    "minimum-stability": "alpha"
+}
