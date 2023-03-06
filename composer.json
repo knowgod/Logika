@@ -1,11 +1,11 @@
 {
     "name": "arkadij/logika",
-    "description": "This is console text mode game. Your goal is to guess the computer's secret number.",
+    "description": "This is a text mode console game. Your goal is to guess the computer's secret number.",
     "license": "MIT",
     "require": {
     },
     "require-dev": {
-        "phpunit/phpunit": "4.8.*"
+        "phpunit/phpunit": "^8.5"
     },
     "authors": [
         {
